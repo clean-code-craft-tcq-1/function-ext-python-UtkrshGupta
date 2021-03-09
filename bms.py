@@ -1,4 +1,5 @@
 from math import isnan
+from numpy import arange
 from bmsConstants import bms_param_thresholds 
 from bmsConstants import bms_multilingual_logs
 from bmsConstants import bms_multilingual_logs_status_heading
@@ -69,15 +70,21 @@ def validate_bms_alert_limits(anomaly, bms_param_name, bms_param_value, language
     elif bms_param_value > get_param_max_limit(bms_param_name):
         anomaly[bms_param_name] = list([log_key, bms_multilingual_logs[language][log_key][1]])
 
+def warning_range(param_min_limit, param_max_limit, mode):
+    warning_tolerance_percentage = 0.05
+    warning_tolerance = warning_tolerance_percentage * param_max_limit
+    if mode == 'min':
+        return list(arange(param_min_limit, param_min_limit + warning_tolerance, 0.1))
+    elif mode == 'max':
+        return list(arange(param_max_limit - warning_tolerance, param_max_limit, 0.1))
+    
 def validate_bms_warning_limits(anomaly, bms_param_name, bms_param_value, language):
     param_min_limit = get_param_min_limit(bms_param_name)
     param_max_limit = get_param_max_limit(bms_param_name)
-    warning_tolerance_percentage = 0.05
-    warning_tolerance = warning_tolerance_percentage * param_max_limit
     log_key = list(get_multilingual_keys(language))[1]
-    if bms_param_value > param_min_limit and bms_param_value < param_min_limit + warning_tolerance:
+    if bms_param_value in warning_range(param_min_limit, param_max_limit, mode='min'):
         anomaly[bms_param_name] = list([log_key, bms_multilingual_logs[language][log_key][0]])
-    elif bms_param_value > param_max_limit - warning_tolerance and bms_param_value < param_max_limit:
+    elif bms_param_value in warning_range(param_min_limit, param_max_limit, mode='max'):
         anomaly[bms_param_name] = list([log_key, bms_multilingual_logs[language][log_key][1]])
         
          
