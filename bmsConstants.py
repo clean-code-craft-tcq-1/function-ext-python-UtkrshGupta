@@ -1,6 +1,6 @@
 bms_param_thresholds = { 
                          'temperature': {'min': 0, 'max': 45},
-                         'soc': {'min': 25 ,'max': 75},
+                         'soc': {'min': 25 ,'max': 80},
                          'charging_rate': {'min': 0, 'max': 0.8}
                        }
 bms_param_descriptions = {
@@ -39,3 +39,18 @@ bms_sensor_temperature_log = {
                                  'en': 'Sensor Temperature is considered in',
                                  'de': 'Sensortemperatur wird in berücksichtigt'
                              }
+
+controller_actions_heading = {
+                                 'en': 'Controller is Triggered and performing below actions',
+                                 'de': 'Der Controller wird ausgelöst und führt die folgenden Aktionen aus'
+                             }
+controller_actions = {
+                        '00': {'en':'Increasing and Maintaining Battery {} quickly',
+                               'de': 'Batterie erhöhen und warten {} schnell'},
+                        '01': {'en':'Decreasing and Maintaining Battery {} quickly',
+                               'de': 'Batterie verringern und warten {} schnell'},
+                        '10': {'en':'Maintaining {} to avoid warnings for lower limits',
+                               'de':'Aufrechterhaltung {} um Warnungen für untere Grenzwerte zu vermeiden'},
+                        '11': {'en':'Maintaining {} to avoid warnings for upper limits',
+                               'de':'Aufrechterhaltung {} um Warnungen für Obergrenzen zu vermeiden'}
+                  }
